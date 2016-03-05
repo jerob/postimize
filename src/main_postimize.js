@@ -145,8 +145,21 @@ function crible(agent, dayOfTheWeek) {
     )
   })
 
-  Promise.all(promises).then(() => {  
-    console.log(_.sortBy(delivered, 'hour'))
+  Promise.all(promises).then(() => {
+    // console.log(_.sortBy(delivered, 'hour'));
+    var positif = delivered.filter(function(item) {
+      if(item.delivered=='1')
+        return true;
+    });
+    var elmt = positif.map(function(item) {
+        return item.hour;
+    });
+    var sum = 0;
+    for( var i = 0; i < elmt.length; i++ ){
+      sum += elmt[i];
+    }
+    var avg = Math.round(sum/elmt.length*100)/100;
+    console.log(Math.floor(avg)+'h'+Math.round((avg % 1)/100*6000));
   })
 }
 
